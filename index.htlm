@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameHub - Upload & Play Games</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-gamepad"></i>
+                <span>GameHub</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#" class="nav-link" onclick="showHome()">Home</a>
+                <a href="#" class="nav-link" id="upload-link" onclick="showUpload()" style="display: none;">Upload Game</a>
+                <a href="#" class="nav-link" id="profile-link" onclick="showProfile()" style="display: none;">My Profile</a>
+                <a href="#" class="nav-link" id="admin-link" onclick="showAdmin()" style="display: none;">Admin</a>
+                <a href="#" class="nav-link" id="login-link" onclick="showLogin()">Login</a>
+                <a href="#" class="nav-link" id="logout-link" onclick="logout()" style="display: none;">Logout</a>
+            </div>
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home-section" class="section active">
+            <div class="hero">
+                <h1>Welcome to GameHub</h1>
+                <p>Upload, share, and play amazing games created by our community</p>
+            </div>
+            
+            <div class="games-container">
+                <div class="section-header">
+                    <h2>Featured Games</h2>
+                    <div class="search-container">
+                        <input type="text" id="search-input" placeholder="Search games..." onkeyup="searchGames()">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                <div id="games-grid" class="games-grid">
+                    <!-- Games will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Section -->
+        <section id="login-section" class="section">
+            <div class="auth-container">
+                <div class="auth-box">
+                    <h2 id="auth-title">Login</h2>
+                    <form id="auth-form">
+                        <div class="form-group" id="signup-fields" style="display: none;">
+                            <input type="text" id="signup-username" placeholder="Username" required>
+                            <input type="email" id="signup-email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="login-username" placeholder="Username" required>
+                            <input type="password" id="login-password" placeholder="Password" required>
+                        </div>
+                        <button type="submit" id="auth-submit-btn">Login</button>
+                    </form>
+                    <p class="auth-switch">
+                        <span id="auth-switch-text">Don't have an account?</span>
+                        <a href="#" id="auth-switch-link" onclick="toggleAuthMode()">Sign Up</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upload Section -->
+        <section id="upload-section" class="section">
+            <div class="upload-container">
+                <h2>Upload Your Game</h2>
+                <form id="upload-form" class="upload-form">
+                    <div class="form-group">
+                        <label for="game-title">Game Title</label>
+                        <input type="text" id="game-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="game-description">Description</label>
+                        <textarea id="game-description" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="game-link">Game Link (URL to your game)</label>
+                        <input type="url" id="game-link" placeholder="https://example.com/your-game" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="game-thumbnail">Thumbnail Image URL</label>
+                        <input type="url" id="game-thumbnail" placeholder="https://example.com/thumbnail.jpg" required>
+                    </div>
+                    <button type="submit">Upload Game</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile-section" class="section">
+            <div class="profile-container">
+                <h2>My Profile</h2>
+                <div class="profile-info">
+                    <div class="profile-header">
+                        <i class="fas fa-user-circle profile-avatar"></i>
+                        <div class="profile-details">
+                            <h3 id="profile-username"></h3>
+                            <p id="profile-email"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-games">
+                    <h3>My Games</h3>
+                    <div id="user-games-grid" class="games-grid">
+                        <!-- User's games will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Section -->
+        <section id="admin-section" class="section">
+            <div class="admin-container">
+                <h2>Admin Dashboard</h2>
+                <div class="admin-tabs">
+                    <button class="tab-btn active" onclick="showAdminTab('games')">Manage Games</button>
+                    <button class="tab-btn" onclick="showAdminTab('users')">Manage Users</button>
+                </div>
+                
+                <div id="admin-games" class="admin-tab-content active">
+                    <h3>All Games</h3>
+                    <div id="admin-games-list" class="admin-list">
+                        <!-- Admin games list will be loaded here -->
+                    </div>
+                </div>
+                
+                <div id="admin-users" class="admin-tab-content">
+                    <h3>All Users</h3>
+                    <div id="admin-users-list" class="admin-list">
+                        <!-- Admin users list will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game View Modal -->
+        <div id="game-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeGameModal()">&times;</span>
+                <div id="game-player">
+                    <!-- Game will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 GameHub. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
